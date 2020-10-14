@@ -36,7 +36,7 @@ namespace CasloFirstProjectPerson.Controller
 
         private List<User> GetUsersData()
         {
-            return Load<List<User>>(USER_FILE_NAME) ?? new List<User>();
+            return Load<User>() ?? new List<User>();
         }
 
         public void SetNewUserData(string character, int quantity = 1, int lvl = 1)
@@ -51,7 +51,7 @@ namespace CasloFirstProjectPerson.Controller
 
         public void Save()
         {
-            Save(USER_FILE_NAME, Users);
+            Save(Users);
         }
 
     }

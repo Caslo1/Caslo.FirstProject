@@ -5,6 +5,7 @@ namespace CasloFirstProjectPerson.Model
     [Serializable]
     public class Character
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public Character(string name)
         {

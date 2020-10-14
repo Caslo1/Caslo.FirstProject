@@ -22,6 +22,7 @@ namespace CasloFirstProject.CMD
 
             var userController = new UserController(name);
             var expController = new ExpController(userController.CurrentUser);
+            var dungeonController = new DungeonController(userController.CurrentUser);
 
             if(userController.IsNewUser)
             {
@@ -39,23 +40,63 @@ namespace CasloFirstProject.CMD
 
             Console.WriteLine(userController.CurrentUser);
 
-            Console.WriteLine("Вы хотите добавить побеждённого противника? ");
-            Console.WriteLine("Нажмите Y ");
-            key = Console.ReadKey();
-            Console.WriteLine();
 
-            if(key.Key == ConsoleKey.Y)
+            while(true)
             {
-                var unites = EnterUnits();
-                expController.Add(unites.Units, unites.Exp);
+                Console.WriteLine("Вы хотите добавить побеждённого противника? ");
+                Console.WriteLine("Нажмите Y чтобы добавить побеждённого противника");
+                Console.WriteLine("Нажмите D чтобы добавить пройденное подземелье");
+                Console.WriteLine("Нажмите Q чтобы выйти");
 
-                foreach(var item in expController.lvlUps.Unites)
+                key = Console.ReadKey();
+                Console.WriteLine();
+
+                switch (key.Key)
                 {
-                    Console.WriteLine($"\t {item.Key} - {item.Value}");
+                    case ConsoleKey.Y:
+                        var unites = EnterUnits();
+                        expController.Add(unites.Units, unites.Exp);
+
+                        foreach (var item in expController.lvlUps.Unites)
+                        {
+                            Console.WriteLine($"\t {item.Key} - {item.Value}");
+                        }
+                        break;
+
+                    case ConsoleKey.D:
+                        var dung = EnterDungeon();
+
+                        dungeonController.Add(dung.Play, dung.Begin, dung.End);
+
+                        foreach(var item in dungeonController.Dungeons)
+                        {
+                            Console.WriteLine($"\t {item.Play} - {item.Start} - {item.Finish}");
+                        }
+
+                        break;
+
+                    case ConsoleKey.Q:
+                        Environment.Exit(0);
+                        break;
                 }
+
+                Console.ReadLine();
             }
 
-            Console.ReadLine();
+        }
+
+        private static (int Begin, int End, Play Play) EnterDungeon()
+        {
+            Console.Write("Введите подземелье: ");
+            var name = Console.ReadLine();
+
+            var quantityunits = ParseInt("Количество противников");
+            var begin = ParseInt("Начало подземелья");
+            var end = ParseInt("Конец подземелья");
+
+            var play = new Play(name, quantityunits);
+
+            return (begin, end, play);
         }
 
         private static (Units Units, int Exp) EnterUnits()
@@ -63,7 +104,6 @@ namespace CasloFirstProject.CMD
             Console.Write("Введите имя противника которого вы победили: ");
             var name = Console.ReadLine();
 
-            Console.Write("Введите полученный опыт: ");
             var exp = ParseInt("Опыт полученный за противника ");
             var unit = new Units(name, exp);
 
@@ -75,7 +115,7 @@ namespace CasloFirstProject.CMD
         {
             while(true)
             {
-                Console.WriteLine($"Введите правильно {name}: ");
+                Console.WriteLine($"Введите {name}: ");
                 if (int.TryParse(Console.ReadLine(), out int value))
                 {
                     return value;

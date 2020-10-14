@@ -7,10 +7,12 @@ namespace CasloFirstProjectPerson.Model
     [Serializable]
     public class CharacterLvlUp
     {
-        public int LvlUp { get; }
+        public int Id { get; set; }
+        public int LvlUp { get; set; }
         public int CharacterLvl { get; }
         public Dictionary<Units, int> Unites { get; }
-        public User User { get; }
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
 
         public CharacterLvlUp(User user)
         {
@@ -35,6 +37,16 @@ namespace CasloFirstProjectPerson.Model
            {
                 Unites[unit] += exp;
            }
+        }
+
+        public int UpLvl()
+        {
+            if (User.exp > 1000)
+            {
+                LvlUp++;
+            }
+
+            return LvlUp;
         }
     }
 }

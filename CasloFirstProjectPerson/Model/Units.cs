@@ -5,9 +5,10 @@ namespace CasloFirstProjectPerson.Model
     [Serializable]
     public class Units
     {
-        public string Name { get; }
-        public int Exp { get; }
-        public int ExpOneUnit { get; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Exp { get; set; }
+        public int ExpOneUnit { get; set; }
 
         public Units(string name, int exp) : this(name, exp, 0) { }
 

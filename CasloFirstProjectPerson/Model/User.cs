@@ -5,11 +5,12 @@ namespace CasloFirstProjectPerson.Model
     [Serializable]
     public class User
     {
+        public int Id { get; set; }
         #region Свойства
         /// <summary>
         /// Имя
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary>
         /// Персонаж
         /// </summary>
@@ -22,6 +23,10 @@ namespace CasloFirstProjectPerson.Model
         /// Уровень
         /// </summary>
         public int Lvl { get; set; }
+        /// <summary>
+        /// Опыт
+        /// </summary>
+        public int exp { get; set; }
         #endregion
 
         /// <summary>
